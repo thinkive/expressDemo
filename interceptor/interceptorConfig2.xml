@@ -1,0 +1,32 @@
+<!--
+拦截器配置文件，多个拦截器用竖杠分割	
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<interceptors>
+	<!--000001和000002需要参数拦截器 -->
+	<interceptor src="./paramsInterceptor" name="params" dec="参数拦截器,发生在所有拦截器之前调用" />
+	<interceptor src="./securityInterceptor" name="security"  dec="权限拦截器，表示该功能号调用前用户是否已经登陆"/>
+	<interceptor src="./ticketInterceptor"  name="ticket" dec="验证码拦截器，用于登陆接口判断验证码是否正确"/>
+	
+	<interceptor-stack name="defaultStack">
+		<interceptor-ref name="params" />
+	</interceptor-stack>
+	<interceptor-stack name="securityStack">
+		<interceptor-ref name="security" />
+	</interceptor-stack>
+	<interceptor-stack name="ticketStack">
+		<interceptor-ref name="ticket" />
+		<interceptor-ref name="security" />
+	</interceptor-stack>
+	
+	<functions>
+		<interceptor-ref name="securityStack">
+			<function-list>000001|000002</function-list>
+		</interceptor-ref>
+		
+		<interceptor-ref name="ticketStack">
+			<function-list>000002</function-list>
+		</interceptor-ref>
+	</functions>	
+	
+</interceptors>

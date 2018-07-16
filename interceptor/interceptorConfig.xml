@@ -1,0 +1,11 @@
+<!--
+拦截器配置文件，多个拦截器用竖杠分割	
+-->
+<?xml version="1.0" encoding="GBK"?>
+<interceptors>
+	<!--000001和000002需要参数拦截器 -->
+	<interceptor src="./defaultInterceptor" dec="缺省拦截器,发生在所有请必须经过,可以做日志打印等操作"/>
+	<interceptor src="./paramsInterceptor" dec="参数拦截器,发生在所有请求之前" >000001|000002</interceptor>
+	<interceptor src="./securityInterceptor" dec="权限拦截器，表示该功能号调用前用户是否已经登陆">000001</interceptor>
+	<interceptor src="./ticketInterceptor" dec="验证码拦截器，用于登陆接口判断验证码是否正确">000004</interceptor>
+</interceptors>
